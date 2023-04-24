@@ -78,9 +78,7 @@ function createQuery(query: any): any {
 }
 
 export class Datastore extends OrigDatastore {
-  namespace: any
   db: Map<string, any>
-  auth: any
   rnd = 0
   constructor(options?: DatastoreOptions) {
     super()
@@ -117,7 +115,7 @@ export class Datastore extends OrigDatastore {
     options = typeof options === 'number' ? { allocations: options } : options
     const allocations = options.allocations || 1
     const result: entity.Key[] = []
-    const info = { keys: [] as google.datastore.v1.IKey[] }
+    const info = { keys: [] as any[] }
 
     do {
       const id = 5000000000000000 + this.rnd++
@@ -356,7 +354,7 @@ export class Datastore extends OrigDatastore {
     return new entity.Key(keyOptions)
   }
   static isKey(value?: unknown) {
-    return entity.isDsKey(value)
+    return entity.isDsKey(value as any)
   }
   isKey(value?: unknown) {
     return Datastore.isKey(value)

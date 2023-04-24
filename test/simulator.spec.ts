@@ -399,7 +399,7 @@ describe('roundtrip', () => {
     expect(entity).toMatchInlineSnapshot(`
       {
         "data": {
-          "date": 2023-02-02T02:04:05.006Z,
+          "date": 2023-02-02T03:04:05.006Z,
         },
         "key": Key {
           "kind": "testYodel",
@@ -419,7 +419,7 @@ describe('roundtrip', () => {
       [
         [
           {
-            "date": 2023-02-02T02:04:05.006Z,
+            "date": 2023-02-02T03:04:05.006Z,
             Symbol(KEY): Key {
               "kind": "testYodel",
               "name": "jsDate",
@@ -433,7 +433,7 @@ describe('roundtrip', () => {
         ],
       ]
     `)
-    expect(result[0][0].date).toMatchInlineSnapshot('2023-02-02T02:04:05.006Z')
+    expect(result[0][0].date).toMatchInlineSnapshot('2023-02-02T03:04:05.006Z')
     expect(result[0][0].date).instanceOf(Date)
     expect(result[0][0].date).toStrictEqual(new Date(2023, 1, 2, 3, 4, 5, 6))
   })
