@@ -1,3 +1,6 @@
+[![version](https://img.shields.io/npm/v/datastore-simulator.svg?style=flat-square)](https://npmjs.org/datastore-simulator)
+
+
 # datastore-simulator
 
 This is a in process Simulator for the Google Cloud Datastore Node.js Client [@google-cloud/datastore

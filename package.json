@@ -87,8 +87,8 @@
     "prepare": "husky install",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "TZ=UTC yarn vitest --coverage test/simulator.spec.ts",
-    "test:all": "TZ=UTC yarn vitest --coverage test/",
+    "test": "TZ=UTC npx vitest --coverage test/simulator.spec.ts",
+    "test:all": "TZ=UTC npx vitest --coverage test/",
     "unimported": "npx unimported; npx findead src"
   },
   "size-limit": [
@@ -102,6 +102,5 @@
     }
   ],
   "typings": "dist/index.d.ts",
-  "version": "0.1.0",
-  "packageManager": "yarn@1.22.1"
+  "version": "0.1.0"
 }
