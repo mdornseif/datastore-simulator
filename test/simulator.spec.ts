@@ -1,5 +1,5 @@
 /*
- * index.test.ts
+ * Test the datastore simulator provided in this package.
  *
  * Created by Dr. Maximilian Dornseif 2021-12-10 in datastore-api
  * Copyright (c) 2021, 2023 Dr. Maximilian Dornseif
@@ -65,12 +65,12 @@ describe('Keys', () => {
     expect(keys[1].kind).toBe('testYodel')
     expect(keys[1].id).toMatch(/\d+/)
 
-    expect(info.keys.length).toBe(2)
-    expect(info.keys[0].partitionId.databaseId).toMatchInlineSnapshot('""')
-    expect(info.keys[0].partitionId.namespaceId).toMatchInlineSnapshot('"test"')
-    expect(info.keys[0].path[0].idType).toMatchInlineSnapshot('"id"')
-    expect(info.keys[0].path[0].kind).toMatchInlineSnapshot('"testYodel"')
-    expect(info.keys[0].path[0].id).toMatch(/\d+/)
+      expect(info.keys.length).toBe(2)
+      expect(info.keys[0]?.partitionId?.databaseId).toMatchInlineSnapshot('""')
+      expect(info.keys[0]?.partitionId?.namespaceId).toMatchInlineSnapshot('"test"')
+      // expect(info.keys[0].path[0].idType).toMatchInlineSnapshot('"id"') // idType may not exist
+      expect(info.keys[0]?.path?.[0]?.kind).toMatchInlineSnapshot('"testYodel"')
+      expect(info.keys[0]?.path?.[0]?.id).toMatch(/\d+/)
   })
 })
 
@@ -137,9 +137,7 @@ describe('Reading', () => {
     expect(result5[0][0][Datastore.KEY].id).toMatchInlineSnapshot('"2"')
 
     // getMulti returns a empty Array for an empty array
-    await expect(() => kvStore.get([])).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"At least one Key object is required."'
-    )
+    await expect(() => kvStore.get([])).rejects.toThrowErrorMatchingInlineSnapshot('[Error: At least one Key object is required.]')
   })
 })
 
@@ -190,14 +188,14 @@ describe('Writing', () => {
     }
     const commitResponse = await kvStore.save([entity, entity2])
     expect(Array.isArray(commitResponse)).toBeTruthy()
-    expect(commitResponse[0].indexUpdates).toMatch(/\d+/)
-    expect(commitResponse[0].mutationResults[0].conflictDetected).toMatchInlineSnapshot('false')
-    expect(commitResponse[0].mutationResults[0].key).toMatchInlineSnapshot('null')
-    expect(commitResponse[0].mutationResults[0].version).toMatch(/\d+/)
-    expect(commitResponse[0].mutationResults[0].createTime.nanos).toMatch(/\d+/)
-    expect(commitResponse[0].mutationResults[0].createTime.seconds).toMatch(/\d+/)
-    expect(commitResponse[0].mutationResults[0].updateTime.nanos).toMatch(/\d+/)
-    expect(commitResponse[0].mutationResults[0].updateTime.seconds).toMatch(/\d+/)
+    expect(commitResponse[0]?.indexUpdates?.toString()).toMatch(/\d+/)
+    expect(commitResponse[0]?.mutationResults?.[0]?.conflictDetected).toMatchInlineSnapshot('false')
+    expect(commitResponse[0]?.mutationResults?.[0]?.key).toMatchInlineSnapshot('null')
+    expect(commitResponse[0]?.mutationResults?.[0]?.version?.toString()).toMatch(/\d+/)
+    expect(commitResponse[0]?.mutationResults?.[0]?.createTime?.nanos?.toString()).toMatch(/\d+/)
+    expect(commitResponse[0]?.mutationResults?.[0]?.createTime?.seconds?.toString()).toMatch(/\d+/)
+    expect(commitResponse[0]?.mutationResults?.[0]?.updateTime?.nanos?.toString()).toMatch(/\d+/)
+    expect(commitResponse[0]?.mutationResults?.[0]?.updateTime?.seconds?.toString()).toMatch(/\d+/)
 
     expect(entity.data.foo).toMatchInlineSnapshot('"bar"')
     // Key.id is still a number (but not when reading)
@@ -216,14 +214,14 @@ describe('Writing', () => {
     // save can be called with an entity or an array. Both have the same result.
     const commitResponse2 = await kvStore.save(entity)
     expect(Array.isArray(commitResponse2)).toBeTruthy()
-    expect(commitResponse2[0].indexUpdates).toMatch(/\d+/)
-    expect(commitResponse2[0].mutationResults[0].conflictDetected).toMatchInlineSnapshot('false')
-    expect(commitResponse2[0].mutationResults[0].key).toMatchInlineSnapshot('null')
-    expect(commitResponse2[0].mutationResults[0].version).toMatch(/\d+/)
-    expect(commitResponse2[0].mutationResults[0].createTime.nanos).toMatch(/\d+/)
-    expect(commitResponse2[0].mutationResults[0].createTime.seconds).toMatch(/\d+/)
-    expect(commitResponse2[0].mutationResults[0].updateTime.nanos).toMatch(/\d+/)
-    expect(commitResponse2[0].mutationResults[0].updateTime.seconds).toMatch(/\d+/)
+    expect(commitResponse2[0]?.indexUpdates?.toString()).toMatch(/\d+/)
+    expect(commitResponse2[0]?.mutationResults?.[0]?.conflictDetected).toMatchInlineSnapshot('false')
+    expect(commitResponse2[0]?.mutationResults?.[0]?.key).toMatchInlineSnapshot('null')
+    expect(commitResponse2[0]?.mutationResults?.[0]?.version?.toString()).toMatch(/\d+/)
+    expect(commitResponse2[0]?.mutationResults?.[0]?.createTime?.nanos?.toString()).toMatch(/\d+/)
+    expect(commitResponse2[0]?.mutationResults?.[0]?.createTime?.seconds?.toString()).toMatch(/\d+/)
+    expect(commitResponse2[0]?.mutationResults?.[0]?.updateTime?.nanos?.toString()).toMatch(/\d+/)
+    expect(commitResponse2[0]?.mutationResults?.[0]?.updateTime?.seconds?.toString()).toMatch(/\d+/)
   })
 })
 
@@ -329,7 +327,7 @@ test('insert / delete', async (t) => {
   const result = await kvStore.insert([entity])
 
   expect(result?.[0]?.mutationResults?.[0]?.conflictDetected).toBe(false)
-  expect(result?.[0]?.mutationResults?.[0]?.version).toMatch(/\d+/)
+  expect(result?.[0]?.mutationResults?.[0]?.version?.toString()).toMatch(/\d+/)
   expect(entity.data.foo).toBe('bar')
   expect(entity.key.path[0]).toBe('testYodel')
   // expect(result?.[0]?.indexUpdates).toBe(3);

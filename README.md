@@ -11,6 +11,15 @@ Typescript compatible and model the Cloud Datastore API surface as close as poss
 
 datastore-simulator does *not* try to model transactions, queries and consistency. 
 
+##
+
+Usage:
+
+Just intatiate a Datastore from 'datastore-simulator':
+
+```
+import {Datastore} from 'datastore-simulator'
+```
 
 ## See also
 

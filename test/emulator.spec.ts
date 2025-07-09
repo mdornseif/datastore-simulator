@@ -1,5 +1,7 @@
 /*
- * emulator.test.ts - Test against the google Datastore Emulator.
+ * emulator.test.ts - Test against the Google Datastore Emulator.
+ * see https://cloud.google.com/datastore/docs/tools/datastore-emulator
+ * it is provided by google-datastore-emulator
  *
  * Created by Dr. Maximilian Dornseif 2021-12-10 in datastore-api
  * Copyright (c) 2021, 2023 Dr. Maximilian Dornseif
