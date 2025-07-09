@@ -2,12 +2,13 @@
   "author": "Maximillian Dornseif",
   "dependencies": {
     "@google-cloud/promisify": "^3.0.1",
+    "assertate-debug": "^2.4.2",
     "google-gax": "^3.6.0",
     "is": "^3.3.0"
   },
   "description": "This is a in-process Simulator for Google Cloud Datastore",
   "devDependencies": {
-    "@google-cloud/datastore": ">=7.5.1",
+    "@google-cloud/datastore": "^8.7.0",
     "@semantic-release/changelog": "^6.0.3",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@tsconfig/recommended": "^1.0.2",
@@ -62,7 +63,7 @@
   "module": "dist/datastore-simulator.esm.js",
   "name": "datastore-simulator",
   "peerDependencies": {
-    "@google-cloud/datastore": ">=7.5.1"
+    "@google-cloud/datastore": "^8.7.0"
   },
   "prettier": {
     "printWidth": 110,
@@ -103,5 +104,5 @@
     }
   ],
   "typings": "dist/index.d.ts",
-  "version": "0.1.0"
+  "version": "1.0.0"
 }
