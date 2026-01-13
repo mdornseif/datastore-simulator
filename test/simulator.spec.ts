@@ -72,7 +72,7 @@ describe('Keys', () => {
     expect(info.keys![0]?.partitionId?.namespaceId).toMatchInlineSnapshot('"test"')
     // expect(info.keys[0].path[0].idType).toMatchInlineSnapshot('"id"') // idType may not exist
     expect(info.keys![0]?.path?.[0]?.kind).toMatchInlineSnapshot('"testYodel"')
-      expect(info.keys![0]?.path?.[0]?.id).toMatch(/\d+/)
+    expect(info.keys![0]?.path?.[0]?.id).toMatch(/\d+/)
   })
 })
 
@@ -139,7 +139,9 @@ describe('Reading', () => {
     expect(result5[0][0][Datastore.KEY].id).toMatchInlineSnapshot('"2"')
 
     // getMulti returns a empty Array for an empty array
-    await expect(() => kvStore.get([])).rejects.toThrowErrorMatchingInlineSnapshot('[Error: At least one Key object is required.]')
+    await expect(() => kvStore.get([])).rejects.toThrowErrorMatchingInlineSnapshot(
+      '[Error: At least one Key object is required.]'
+    )
   })
 })
 

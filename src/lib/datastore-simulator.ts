@@ -25,10 +25,10 @@ import {
   UpsertCallback,
   UpsertResponse,
 } from '@google-cloud/datastore'
-import {google} from '@google-cloud/datastore/build/protos/protos.js'
-import {AggregateQuery} from '@google-cloud/datastore/build/src/aggregate.js'
-import {Entities, entity} from '@google-cloud/datastore/build/src/entity.js'
-import {RunQueryCallback, RunQueryOptions, RunQueryResponse} from '@google-cloud/datastore/build/src/query'
+import { google } from '@google-cloud/datastore/build/protos/protos.js'
+import { AggregateQuery } from '@google-cloud/datastore/build/src/aggregate.js'
+import { Entities, entity } from '@google-cloud/datastore/build/src/entity.js'
+import { RunQueryCallback, RunQueryOptions, RunQueryResponse } from '@google-cloud/datastore/build/src/query'
 import {
   AllocateIdsCallback,
   AllocateIdsOptions,
@@ -45,26 +45,26 @@ import {
   SaveCallback,
   SaveResponse,
 } from '@google-cloud/datastore/build/src/request'
-import {promisifyAll} from '@google-cloud/promisify'
-import {assert} from 'assertate-debug'
-import {CallOptions} from 'google-gax'
+import { promisifyAll } from '@google-cloud/promisify'
+import { assert } from 'assertate-debug'
+import { CallOptions } from 'google-gax'
 import * as is from 'is'
 
 const urlSafeKey = new entity.URLSafeKey()
 
 const KEY_SELECT = '__key__'
 
-function filter(query: {filters: any[][]}, field: any, operator: any, value: any): any {
+function filter(query: { filters: any[][] }, field: any, operator: any, value: any): any {
   query.filters.push([field, operator, value])
   return createQuery(query)
 }
 
-function limit(query: {limit: any}, limit: any): any {
+function limit(query: { limit: any }, limit: any): any {
   query.limit = limit
   return createQuery(query)
 }
 
-function select(query: {select: string | string[]}, fields: string | string[]) {
+function select(query: { select: string | string[] }, fields: string | string[]) {
   query.select = Array.isArray(fields) ? fields : [fields].flat()
 
   if (query.select.length > 1 && query.select.includes(KEY_SELECT)) {
@@ -126,12 +126,12 @@ export class Datastore extends OrigDatastore {
   allocateIds(
     key: entity.Key,
     options: AllocateIdsOptions | number,
-    callback?: AllocateIdsCallback,
+    callback?: AllocateIdsCallback
   ): Promise<AllocateIdsResponse> | void {
-    options = typeof options === 'number' ? {allocations: options} : options
+    options = typeof options === 'number' ? { allocations: options } : options
     const allocations = options.allocations || 1
     const result: entity.Key[] = []
-    const info = {keys: [] as any[]}
+    const info = { keys: [] as any[] }
 
     do {
       const id = 5_000_000_000_000_000 + this.rnd++
@@ -162,7 +162,7 @@ export class Datastore extends OrigDatastore {
   delete(
     keys: entity.Key | entity.Key[],
     gaxOptionsOrCallback?: CallOptions | DeleteCallback,
-    cb?: DeleteCallback,
+    cb?: DeleteCallback
   ): Promise<DeleteResponse> | void {
     const gaxOptions = typeof gaxOptionsOrCallback === 'object' ? gaxOptionsOrCallback : {}
     const callback = typeof gaxOptionsOrCallback === 'function' ? gaxOptionsOrCallback : cb!
@@ -192,7 +192,7 @@ export class Datastore extends OrigDatastore {
   get(
     keys: entity.Key | entity.Key[],
     optionsOrCallback?: CreateReadStreamOptions | GetCallback,
-    cb?: GetCallback,
+    cb?: GetCallback
   ): Promise<GetResponse> | void {
     const options = typeof optionsOrCallback === 'object' && optionsOrCallback ? optionsOrCallback : {}
     const callback = typeof optionsOrCallback === 'function' ? optionsOrCallback : cb!
@@ -227,7 +227,7 @@ export class Datastore extends OrigDatastore {
   runQuery(
     query: Query,
     optionsOrCallback?: RunQueryCallback | RunQueryOptions,
-    cb?: RunQueryCallback,
+    cb?: RunQueryCallback
   ): Promise<RunQueryResponse> | void {
     const options = typeof optionsOrCallback === 'object' ? optionsOrCallback : {}
     const callback = typeof optionsOrCallback === 'function' ? optionsOrCallback : cb!
@@ -245,7 +245,7 @@ export class Datastore extends OrigDatastore {
       console.warn('entityFilters not implemented', query.entityFilters)
     }
 
-    if ( query.filters.length === 0) {
+    if (query.filters.length === 0) {
       for (const [ks, entity] of filtered) {
         reply.push({
           [Datastore.KEY]: entity[Datastore.KEY],
@@ -316,7 +316,7 @@ export class Datastore extends OrigDatastore {
 
     // TODO: handle query.limit
 
-    setImmediate(() => callback(null, reply, {moreResults: 'MORE_RESULTS_AFTER_LIMIT'}))
+    setImmediate(() => callback(null, reply, { moreResults: 'MORE_RESULTS_AFTER_LIMIT' }))
   }
 
   merge(entities: Entities): Promise<CommitResponse>
@@ -373,7 +373,7 @@ export class Datastore extends OrigDatastore {
   save(
     entities: Entities,
     gaxOptionsOrCallback?: CallOptions | SaveCallback,
-    cb?: SaveCallback,
+    cb?: SaveCallback
   ): Promise<SaveResponse> | void {
     const gaxOptions = typeof gaxOptionsOrCallback === 'object' ? gaxOptionsOrCallback : {}
     const callback = typeof gaxOptionsOrCallback === 'function' ? gaxOptionsOrCallback : cb!
@@ -417,8 +417,8 @@ export class Datastore extends OrigDatastore {
               key: null,
               version: 1,
               conflictDetected: false, // (boolean|null);
-              createTime: {nanos: 1, seconds: 2},
-              updateTime: {nanos: 3, seconds: 4},
+              createTime: { nanos: 1, seconds: 2 },
+              updateTime: { nanos: 3, seconds: 4 },
             },
           ],
           indexUpdates: 1, // number|null);
@@ -463,11 +463,11 @@ export class Datastore extends OrigDatastore {
     return new entity.Key(keyOptions)
   }
 
-  static isKey(value?: unknown) {
+  static isKey(value?: {}): value is entity.Key {
     return entity.isDsKey(value as any)
   }
 
-  isKey(value?: unknown) {
+  isKey(value?: {} | undefined): value is Key {
     return Datastore.isKey(value)
   }
 
@@ -477,7 +477,7 @@ export class Datastore extends OrigDatastore {
   keyToLegacyUrlSafe(
     key: entity.Key,
     locationPrefixOrCallback?: KeyToLegacyUrlSafeCallback | string,
-    callback?: KeyToLegacyUrlSafeCallback,
+    callback?: KeyToLegacyUrlSafeCallback
   ): Promise<string> | void {
     const locationPrefix = typeof locationPrefixOrCallback === 'string' ? locationPrefixOrCallback : ''
     callback = typeof locationPrefixOrCallback === 'function' ? locationPrefixOrCallback : callback
@@ -567,17 +567,22 @@ class Transaction extends DatastoreRequest {
   get(
     keys: entity.Key | entity.Key[],
     optionsOrCallback?: CreateReadStreamOptions | GetCallback,
-    cb?: GetCallback,
-  ): Promise<GetResponse> | void {
-   
-  }
+    cb?: GetCallback
+  ): Promise<GetResponse> | void {}
 
   commit(gaxOptions?: CallOptions): Promise<CommitResponse>
   commit(callback: CommitCallback): void
   commit(gaxOptions: CallOptions, callback: CommitCallback): void
-  commit(gaxOptionsOrCallback?: CallOptions | CommitCallback, cb?: CommitCallback): Promise<CommitResponse> | void {
+  commit(
+    gaxOptionsOrCallback?: CallOptions | CommitCallback,
+    cb?: CommitCallback
+  ): Promise<CommitResponse> | void {
     const callback =
-      typeof gaxOptionsOrCallback === 'function' ? gaxOptionsOrCallback : typeof cb === 'function' ? cb : () => {}
+      typeof gaxOptionsOrCallback === 'function'
+        ? gaxOptionsOrCallback
+        : typeof cb === 'function'
+        ? cb
+        : () => {}
     const gaxOptions = typeof gaxOptionsOrCallback === 'object' ? gaxOptionsOrCallback : {}
 
     if (this.skipCommit) {
@@ -611,7 +616,7 @@ class Transaction extends DatastoreRequest {
   runQuery(
     query: Query,
     optionsOrCallback?: RunQueryCallback | RunQueryOptions,
-    cb?: RunQueryCallback,
+    cb?: RunQueryCallback
   ): Promise<RunQueryResponse> | void {
     // @ts-ignore
     return this.datastore.runQuery(query, optionsOrCallback, cb)
@@ -631,7 +636,7 @@ class Transaction extends DatastoreRequest {
   rollback(gaxOptions: CallOptions, callback: RollbackCallback): void
   rollback(
     gaxOptionsOrCallback?: CallOptions | RollbackCallback,
-    cb?: RollbackCallback,
+    cb?: RollbackCallback
   ): Promise<RollbackResponse> | void {
     const gaxOptions = typeof gaxOptionsOrCallback === 'object' ? gaxOptionsOrCallback : {}
     const callback = typeof gaxOptionsOrCallback === 'function' ? gaxOptionsOrCallback : cb!
@@ -697,13 +702,17 @@ class Transaction extends DatastoreRequest {
 }
 
 export type ModifiedEntities = Array<{
-  entity: {key: Entity}
+  entity: { key: Entity }
   method: string
   args: Entity[]
 }>
 export type RunResponse = [Transaction, google.datastore.v1.IBeginTransactionResponse]
 export interface RunCallback {
-  (error: Error | null, transaction: Transaction | null, response?: google.datastore.v1.IBeginTransactionResponse): void
+  (
+    error: Error | null,
+    transaction: Transaction | null,
+    response?: google.datastore.v1.IBeginTransactionResponse
+  ): void
 }
 export interface RollbackCallback {
   (error: Error | null, response?: google.datastore.v1.IRollbackResponse): void
