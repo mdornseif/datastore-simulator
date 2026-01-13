@@ -1,10 +1,10 @@
 {
   "author": "Maximillian Dornseif",
   "dependencies": {
-    "@google-cloud/promisify": "^3.0.1",
-    "assertate-debug": "^2.4.2",
-    "google-gax": "^3.6.0",
-    "is": "^3.3.0"
+    "@google-cloud/promisify": ">=3.0.1",
+    "assertate-debug": ">=2.4.2",
+    "google-gax": ">=3.6.0",
+    "is": ">=3.3.0"
   },
   "description": "This is a in-process Simulator for Google Cloud Datastore",
   "devDependencies": {
@@ -12,7 +12,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@tsconfig/recommended": "^1.0.2",
-    "@types/is": "^0.0.21",
+    "@types/is": ">=0.0.21",
     "@vitest/coverage-v8": "^3.2.4",
     "dts-cli": "^2.0.2",
     "husky": "^8.0.3",
@@ -20,12 +20,12 @@
     "semantic-release": "^23.0.0",
     "size-limit": "^8.2.4",
     "sort-package-json": "^2.4.1",
-    "tslib": "^2.5.0",
-    "typescript": "^5.0.4",
+    "tslib": ">=2.5.0",
+    "typescript": ">=5.0.4",
     "vitest": "^3.2.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "files": [
     "dist",
@@ -62,7 +62,7 @@
   "module": "dist/datastore-simulator.esm.js",
   "name": "datastore-simulator",
   "peerDependencies": {
-    "@google-cloud/datastore": "^8.7.0"
+    "@google-cloud/datastore": "^9.0.0"
   },
   "prettier": {
     "printWidth": 110,
