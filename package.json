@@ -31,7 +31,7 @@
     "dist",
     "src"
   ],
-  "homepage": "https://github.com/mdornseif/datastore-simulator",
+  "homepage": "https://forge.23.nu/md/datastore-simulator",
   "husky": {
     "hooks": {
       "pre-commit": "dts lint"
@@ -79,7 +79,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mdornseif/datastore-simulator"
+    "url": "git+https://forge.23.nu/md/datastore-simulator.git"
   },
   "scripts": {
     "analyze": "size-limit --why",
